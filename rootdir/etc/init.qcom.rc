@@ -73,8 +73,6 @@ on boot
     mkdir /dev/socket/qmux_gps 0770 gps gps
     chmod 2770 /dev/socket/qmux_gps
 
-    mkdir /persist/bluetooth 0770 bluetooth bluetooth
-
     # Charger
     chown root system /sys/module/qpnp_charger/parameters/charger_monitor
     chown root system /sys/class/power_supply/battery/input_current_max
@@ -232,12 +230,44 @@ on post-fs
     chmod 0644 /sys/class/timed_output/vibrator/vtg_min
 
     # LEDs
-    chown system system /sys/class/leds/red/blink
-    chown system system /sys/class/leds/blue/blink
-    chown system system /sys/class/leds/green/blink
-    chmod 0644 /sys/class/leds/red/blink
-    chmod 0644 /sys/class/leds/blue/blink
-    chmod 0644 /sys/class/leds/green/blink
+    chown system system /sys/class/leds/rgb/rgb_blink
+    chown system system /sys/class/leds/red/brightness
+    chown system system /sys/class/leds/red/duty_pcts
+    chown system system /sys/class/leds/red/pause_hi
+    chown system system /sys/class/leds/red/pause_lo
+    chown system system /sys/class/leds/red/ramp_step_ms
+    chown system system /sys/class/leds/red/start_idx
+    chown system system /sys/class/leds/green/brightness
+    chown system system /sys/class/leds/green/duty_pcts
+    chown system system /sys/class/leds/green/pause_hi
+    chown system system /sys/class/leds/green/pause_lo
+    chown system system /sys/class/leds/green/ramp_step_ms
+    chown system system /sys/class/leds/green/start_idx
+    chown system system /sys/class/leds/blue/brightness
+    chown system system /sys/class/leds/blue/duty_pcts
+    chown system system /sys/class/leds/blue/pause_hi
+    chown system system /sys/class/leds/blue/pause_lo
+    chown system system /sys/class/leds/blue/ramp_step_ms
+    chown system system /sys/class/leds/blue/start_idx
+    chmod 0644 /sys/class/leds/rgb/rgb_blink
+    chmod 0644 /sys/class/leds/red/brightness
+    chmod 0644 /sys/class/leds/red/duty_pcts
+    chmod 0644 /sys/class/leds/red/pause_hi
+    chmod 0644 /sys/class/leds/red/pause_lo
+    chmod 0644 /sys/class/leds/red/ramp_step_ms
+    chmod 0644 /sys/class/leds/red/start_idx
+    chmod 0644 /sys/class/leds/green/brightness
+    chmod 0644 /sys/class/leds/green/duty_pcts
+    chmod 0644 /sys/class/leds/green/pause_hi
+    chmod 0644 /sys/class/leds/green/pause_lo
+    chmod 0644 /sys/class/leds/green/ramp_step_ms
+    chmod 0644 /sys/class/leds/green/start_idx
+    chmod 0644 /sys/class/leds/blue/brightness
+    chmod 0644 /sys/class/leds/blue/duty_pcts
+    chmod 0644 /sys/class/leds/blue/pause_hi
+    chmod 0644 /sys/class/leds/blue/pause_lo
+    chmod 0644 /sys/class/leds/blue/ramp_step_ms
+    chmod 0644 /sys/class/leds/blue/start_idx
 
     # Torch
     chown system camera /sys/class/leds/led:flash_torch/brightness
@@ -543,18 +573,31 @@ service time_daemon /system/bin/time_daemon
     group root
 
 on property:vold.decrypt=trigger_restart_framework
+    start config_bdaddr
     start config_bluetooth
     start wcnss-service
 
-service config_bluetooth /system/bin/sh /init.qcom.bt.sh
+service config_bdaddr /system/bin/btnvtool -O
+    class late_start
+    user bluetooth
+    group bluetooth net_bt_admin qcom_diag radio
+    oneshot
+
+service config_bluetooth /system/bin/sh /init.qcom.bt.sh "onboot"
     class core
     user root
     group bluetooth net_bt_admin qcom_diag radio
     oneshot
+
+service hciattach /system/bin/sh /init.qcom.bt.sh
+    class late_start
+    user root
+    group bluetooth net_bt_admin qcom_diag radio
     disabled
+    oneshot
 
 on property:bluetooth.hciattach=true
-    start config_bluetooth
+    start hciattach
 
 on property:bluetooth.hciattach=false
     setprop bluetooth.status off

@@ -13,6 +13,7 @@ vendor/lib/rfsa/adsp/libscveT2T_skel.so
 
 # Bluetooth
 bin/btnvtool
+# bin/hci_qcomm_init (from bacon)
 bin/hci_qcomm_init
 vendor/lib/libbtnv.so
 
@@ -289,3 +290,6 @@ vendor/lib/libthermalioctl.so
 bin/time_daemon
 -vendor/lib/libtime_genoff.so
 -vendor/lib/libTimeService.so
+
+# Wcnss (from ham)
+lib/libwcnss_qmi.so

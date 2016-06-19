@@ -1,5 +1,5 @@
 #
-# Copyright 2013 The Android Open Source Project
+# Copyright (C) 2016 The CyanogenMod Project
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -14,12 +14,14 @@
 # limitations under the License.
 #
 
-LOCAL_PATH:= $(call my-dir)
+LOCAL_PATH := $(call my-dir)
 
 include $(CLEAR_VARS)
-LOCAL_SRC_FILES := addrloader.c
-LOCAL_SHARED_LIBRARIES := libcutils liblog
+
 LOCAL_MODULE_TAGS := optional
-LOCAL_MODULE_OWNER := lge
-LOCAL_MODULE := bdAddrLoader
-include $(BUILD_EXECUTABLE)
+LOCAL_C_INCLUDES := system/core/init
+LOCAL_CFLAGS := -Wall -DANDROID_TARGET=\"$(TARGET_BOARD_PLATFORM)\"
+LOCAL_SRC_FILES := init_onyx.cpp
+LOCAL_MODULE := libinit_onyx
+
+include $(BUILD_STATIC_LIBRARY)

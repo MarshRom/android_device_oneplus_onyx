@@ -68,20 +68,6 @@ PRODUCT_COPY_FILES += \
 
 # Audio
 PRODUCT_COPY_FILES += \
-    $(LOCAL_PATH)/audio/acdb/Fluid_Bluetooth_cal.acdb:system/etc/acdbdata/Fluid/Fluid_Bluetooth_cal.acdb \
-    $(LOCAL_PATH)/audio/acdb/Fluid_General_cal.acdb:system/etc/acdbdata/Fluid/Fluid_General_cal.acdb \
-    $(LOCAL_PATH)/audio/acdb/Fluid_Global_cal.acdb:system/etc/acdbdata/Fluid/Fluid_Global_cal.acdb \
-    $(LOCAL_PATH)/audio/acdb/Fluid_Handset_cal.acdb:system/etc/acdbdata/Fluid/Fluid_Handset_cal.acdb \
-    $(LOCAL_PATH)/audio/acdb/Fluid_Hdmi_cal.acdb:system/etc/acdbdata/Fluid/Fluid_Hdmi_cal.acdb \
-    $(LOCAL_PATH)/audio/acdb/Fluid_Headset_cal.acdb:system/etc/acdbdata/Fluid/Fluid_Headset_cal.acdb \
-    $(LOCAL_PATH)/audio/acdb/Fluid_Speaker_cal.acdb:system/etc/acdbdata/Fluid/Fluid_Speaker_cal.acdb \
-    $(LOCAL_PATH)/audio/acdb/Liquid_Bluetooth_cal.acdb:system/etc/acdbdata/Liquid/Liquid_Bluetooth_cal.acdb \
-    $(LOCAL_PATH)/audio/acdb/Liquid_General_cal.acdb:system/etc/acdbdata/Liquid/Liquid_General_cal.acdb \
-    $(LOCAL_PATH)/audio/acdb/Liquid_Global_cal.acdb:system/etc/acdbdata/Liquid/Liquid_Global_cal.acdb \
-    $(LOCAL_PATH)/audio/acdb/Liquid_Handset_cal.acdb:system/etc/acdbdata/Liquid/Liquid_Handset_cal.acdb \
-    $(LOCAL_PATH)/audio/acdb/Liquid_Hdmi_cal.acdb:system/etc/acdbdata/Liquid/Liquid_Hdmi_cal.acdb \
-    $(LOCAL_PATH)/audio/acdb/Liquid_Headset_cal.acdb:system/etc/acdbdata/Liquid/Liquid_Headset_cal.acdb \
-    $(LOCAL_PATH)/audio/acdb/Liquid_Speaker_cal.acdb:system/etc/acdbdata/Liquid/Liquid_Speaker_cal.acdb \
     $(LOCAL_PATH)/audio/acdb/MTP_Bluetooth_cal.acdb:system/etc/acdbdata/MTP/MTP_Bluetooth_cal.acdb \
     $(LOCAL_PATH)/audio/acdb/MTP_General_cal.acdb:system/etc/acdbdata/MTP/MTP_General_cal.acdb \
     $(LOCAL_PATH)/audio/acdb/MTP_Global_cal.acdb:system/etc/acdbdata/MTP/MTP_Global_cal.acdb \
@@ -106,10 +92,6 @@ PRODUCT_PACKAGES += \
     libqcomvoiceprocessing \
     tinymix
 
-# Bluetooth
-PRODUCT_PACKAGES += \
-    bdAddrLoader
-
 # Camera
 PRODUCT_PACKAGES += \
     libboringssl-compat \
@@ -126,6 +108,10 @@ PRODUCT_PACKAGES += \
     librmnetctl \
     rmnetcli
 
+# Doze
+PRODUCT_PACKAGES += \
+    OnyxDoze
+
 # Graphics
 PRODUCT_PACKAGES += \
     copybit.msm8974 \
@@ -134,6 +120,10 @@ PRODUCT_PACKAGES += \
     memtrack.msm8974 \
     liboverlay \
     libtinyxml
+
+# Gello
+PRODUCT_PACKAGES += \
+    Gello
 
 # GPS
 PRODUCT_PACKAGES += \
@@ -188,20 +178,14 @@ PRODUCT_COPY_FILES += \
 PRODUCT_PACKAGES += \
     libc2dcolorconvert \
     libdivxdrmdecrypt \
-    libdashplayer \
     libOmxAacEnc \
     libOmxAmrEnc \
     libOmxCore \
     libOmxEvrcEnc \
     libOmxQcelp13Enc \
     libOmxVdec \
-    libOmxVdecHevc \
     libOmxVenc \
-    libstagefrighthw \
-    qcmediaplayer
-
-PRODUCT_BOOT_JARS += \
-    qcmediaplayer
+    libstagefrighthw
 
 # Power
 PRODUCT_PACKAGES += \
@@ -243,8 +227,7 @@ PRODUCT_PACKAGES += \
     hostapd.deny
 
 PRODUCT_PACKAGES += \
-    wcnss_service \
-    libwcnss_qmi
+    wcnss_service
 
 # Inherit from oppo-common
 $(call inherit-product, device/oppo/common/common.mk)

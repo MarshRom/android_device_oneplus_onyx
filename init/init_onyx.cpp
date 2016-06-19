@@ -32,25 +32,23 @@
 #include "log.h"
 #include "util.h"
 
-#include "init_msm.h"
+#define ISMATCH(a,b)    (!strncmp(a,b,PROP_VALUE_MAX))
 
-void init_msm_properties(unsigned long msm_id,unsigned long msm_ver, char *board_type) {
+void vendor_load_properties()
+{
     char device[PROP_VALUE_MAX];
+    char platform[PROP_VALUE_MAX];
     char rf_version[PROP_VALUE_MAX];
     int rc;
 
-    UNUSED(msm_id);
-    UNUSED(msm_ver);
-    UNUSED(board_type);
-
-    rc = property_get("ro.cm.device", device);
-    if (!rc || !ISMATCH(device, "onyx"))
+    rc = property_get("ro.board.platform", platform);
+    if (!rc || !ISMATCH(platform, ANDROID_TARGET))
         return;
 
     property_get("ro.boot.rf_version", rf_version);
 
     if (strstr(rf_version, "101")) {
-        /* Chinese */
+        /* China */
         property_set("ro.product.model", "ONE E1001");
         property_set("ro.rf_version", "TDD_FDD_Ch_All");
     } else if (strstr(rf_version, "102")) {
@@ -62,4 +60,6 @@ void init_msm_properties(unsigned long msm_id,unsigned long msm_ver, char *board
         property_set("ro.product.model", "ONE E1005");
         property_set("ro.rf_version", "TDD_FDD_Am");
     }
+    property_get("ro.product.device", device);
+    INFO("Found rf_version : %s setting build properties for %s device\n", rf_version, device);
 }
