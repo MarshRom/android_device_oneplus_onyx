@@ -94,6 +94,7 @@ PRODUCT_PACKAGES += \
 
 # Camera
 PRODUCT_PACKAGES += \
+    camera.msm8974 \
     libboringssl-compat \
     libstlport \
     libshim_camera \
@@ -110,7 +111,7 @@ PRODUCT_PACKAGES += \
 
 # Doze
 PRODUCT_PACKAGES += \
-    OnyxDoze
+    OneplusDoze
 
 # Graphics
 PRODUCT_PACKAGES += \
